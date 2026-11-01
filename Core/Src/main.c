@@ -53,7 +53,7 @@ float accel[3], gyro[3];
 
 volatile float pitch = 0.0f;
 volatile float roll  = 0.0f;
-volatile float yaw   = 0.0f;   // ← 新增：相对 Yaw
+volatile float yaw   = 0.0f;
 
 float alpha = 0.98f;
 uint32_t last_tick = 0;
