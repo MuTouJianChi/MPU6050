@@ -1,0 +1,13 @@
+# 编译产物
+*.o
+*.elf
+*.bin
+*.hex
+*.map
+build/
+Debug/
+Release/
+
+# IDE / 编辑器
+.vscode/
+.idea/
