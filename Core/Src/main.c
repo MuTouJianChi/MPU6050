@@ -128,8 +128,8 @@ int main(void)
     gyro_offset[j] = sum[j] / N;    // 平均值就是零偏
   }
 
-  OLED_ShowString(1, 1, "Roll:");
-  OLED_ShowString(2, 1, "Pitch :");
+  OLED_ShowString(1, 1, "Pitch:");
+  OLED_ShowString(2, 1, "Roll :");
   OLED_ShowString(3, 1, "Yaw  :");
 
   last_tick = HAL_GetTick();
@@ -141,8 +141,8 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    OLED_ShowFloat(1, 7, roll, 3, 2);
-    OLED_ShowFloat(2, 7, pitch,  3, 2);
+    OLED_ShowFloat(1, 7, pitch, 3, 2);
+    OLED_ShowFloat(2, 7, roll,  3, 2);
     OLED_ShowFloat(3, 7, yaw,   3, 2);
 
     /* USER CODE END WHILE */
@@ -220,12 +220,12 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
     gyro[2] -= gyro_offset[2];
 
     //  加速度计算角度,其中180° = π 弧度 ≈ 3.14159 弧度 ==》1 弧度 = 180 / π ≈ 57.29578°
-    float acc_pitch = atan2f(accel[0] , sqrtf(accel[1]*accel[1] + accel[2]*accel[2])) * 57.29578f;
-    float acc_roll  = atan2f(accel[1] , sqrtf(accel[0]*accel[0] + accel[2]*accel[2])) * 57.29578f;
+    float acc_pitch = atan2f(accel[1] , sqrtf(accel[1]*accel[1] + accel[2]*accel[2])) * 57.29578f;
+    float acc_roll  = atan2f(accel[0] , sqrtf(accel[0]*accel[0] + accel[2]*accel[2])) * 57.29578f;
 
     // 一阶互补滤波
-    pitch = alpha * (pitch + gyro[1] * dt) + (1.0f - alpha) * acc_pitch;
-    roll  = alpha * (roll  + gyro[0] * dt) + (1.0f - alpha) * acc_roll;
+    pitch = alpha * (pitch + gyro[0] * dt) + (1.0f - alpha) * acc_pitch;
+    roll  = alpha * (roll  + gyro[1] * dt) + (1.0f - alpha) * acc_roll;
 
     yaw += gyro[2] * dt;
   }
